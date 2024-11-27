@@ -5,7 +5,27 @@ import java.util.Random;
 import java.util.HashSet;
 import javax.swing.*;
 
-public class PanMac extends JPanel {
+public class PanMac extends JPanel implements ActionListener, KeyListener{
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        repaint();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        System.out.println("keyReleased" + e.getKeyCode());
+    }
+
     class Block{
         int x;
         int y;
@@ -59,6 +79,7 @@ public class PanMac extends JPanel {
    HashSet<Block> ghosts;
    Block pacman;
 
+   Timer gameLoop;
 
    private Image wallImage;
    private Image blueGhostImage;
@@ -74,7 +95,8 @@ public class PanMac extends JPanel {
 
     PanMac(){
         setPreferredSize(new Dimension(boardWidth, boardHeight));
-        setBackground(Color.BLUE);
+        setBackground(Color.BLACK);
+        addKeyListener(this);
 
         wallImage = new ImageIcon(getClass().getResource("./wall.png")).getImage();
         blueGhostImage = new ImageIcon(getClass().getResource("./blueGhost.png")).getImage();
@@ -88,7 +110,8 @@ public class PanMac extends JPanel {
         pacmanRightImage = new ImageIcon(getClass().getResource("./pacmanRight.png")).getImage();
 
         loadMap();
-
+        gameLoop = new Timer(50, this);
+        gameLoop.start();
     }
 
     public void loadMap(){
@@ -96,8 +119,8 @@ public class PanMac extends JPanel {
         foods=  new HashSet<Block>();
         ghosts= new HashSet<Block>();
 
-        for(int r = 0; r> rowCount; r++){
-            for(int c = 0; c> columnCount; c++){
+        for(int r = 0; r < rowCount; r++){
+            for(int c = 0; c < columnCount; c++){
                 String row = tileMap[r];
                 char tileMapChar = row.charAt(c);
 
@@ -145,5 +168,15 @@ public class PanMac extends JPanel {
         for(Block ghost  : ghosts){
             g.drawImage(ghost.image, ghost.x, ghost.y, ghost.width, ghost.height, null);
         }
+
+        for(Block wall: walls ){
+            g.drawImage(wall.image, wall.x, wall.y, wall.width, wall.height, null);
+        }
+
+        g.setColor(Color.WHITE);
+        for(Block food : foods){
+            g.fillRect(food.x, food.y, food.width, food.height);
+        }
     }
+
 }
