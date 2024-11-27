@@ -1,17 +1,17 @@
 package ie.jr.project;
+
 import javax.swing.JFrame;
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
+
+public class Main{
+    public static void main(String[] args) throws Exception {
         int rowCount = 21;
         int columnCount = 19;
         int tileSize = 32;
         int boardWidth = columnCount * tileSize;
         int boardHeight = rowCount * tileSize;
 
-        JFrame frame = new JFrame("PanMac");
-
+        JFrame frame = new JFrame("Pac Man");
+        // frame.setVisible(true);
         frame.setSize(boardWidth, boardHeight);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
