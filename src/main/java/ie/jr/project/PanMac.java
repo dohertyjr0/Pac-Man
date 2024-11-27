@@ -74,7 +74,7 @@ public class PanMac extends JPanel {
 
     PanMac(){
         setPreferredSize(new Dimension(boardWidth, boardHeight));
-        setBackground(Color.BLACK);
+        setBackground(Color.BLUE);
 
         wallImage = new ImageIcon(getClass().getResource("./wall.png")).getImage();
         blueGhostImage = new ImageIcon(getClass().getResource("./blueGhost.png")).getImage();
@@ -86,6 +86,8 @@ public class PanMac extends JPanel {
         pacmanDownImage = new ImageIcon(getClass().getResource("./pacmanDown.png")).getImage();
         pacmanLeftImage = new ImageIcon(getClass().getResource("./pacmanLeft.png")).getImage();
         pacmanRightImage = new ImageIcon(getClass().getResource("./pacmanRight.png")).getImage();
+
+        loadMap();
 
     }
 
@@ -125,11 +127,23 @@ public class PanMac extends JPanel {
                 else if(tileMapChar == 'P'){
                     pacman = new Block(pacmanUpImage,x,y,tileSize, tileSize);
                 }
-                else if(tileMapChar == ''){
+                else if(tileMapChar == ' '){
                     Block food = new Block(null, x + 14, y+14, 4, 4);
                     foods.add(food);
                 }
             }
+        }
+    }
+
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        draw(g);
+    }
+    public void draw(Graphics g){
+        g.drawImage(pacman.image, pacman.x, pacman.y, pacman.width, pacman.height, null);
+
+        for(Block ghost  : ghosts){
+            g.drawImage(ghost.image, ghost.x, ghost.y, ghost.width, ghost.height, null);
         }
     }
 }
